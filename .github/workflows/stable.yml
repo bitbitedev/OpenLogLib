@@ -9,9 +9,9 @@ name: Build
 
 on:
   push:
-    branches: [ release ]
+    branches: [ stable ] 
   pull_request:
-    branches: [ release ]
+    branches: [ stable ]
 
 jobs:
   build:
