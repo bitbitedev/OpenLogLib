@@ -19,16 +19,16 @@ public abstract class Log {
 	 * @param replacements HashMap with user defined templates with their replacement information.
 	 * @return the formatted String
 	 */
-	protected String format(HashMap<String, String> replacements) {
-		String modify = this.properties.logFormat();
-		for(var entry : replacements.entrySet()) {
-			modify = modify.replace(entry.getKey(), entry.getValue());
+	protected String format(HashMap<String, String> replaces) {
+		String modify = this.properties.getLogFormat();
+		for(var entry : replaces.entrySet()) {
+			modify = modify.replace(entry.getKey(), (this.properties.isColored()) ? entry.getValue() : (!entry.getValue().startsWith("\u001b")) ? entry.getValue() : "");
 		}
-		for(var entry : this.properties.templates().entrySet()) {
-			modify = modify.replace(entry.getKey(), entry.getValue());
+		for(var entry : this.properties.getTemplates().entrySet()) {
+			modify = modify.replace(entry.getKey(), (this.properties.isColored()) ? entry.getValue() : (!entry.getValue().startsWith("\u001b")) ? entry.getValue() : "");
 		}
-		for(var entry : this.properties.colors().entrySet()) {
-			modify = modify.replace("${"+entry.getKey()+"}", entry.getValue());
+		for(Color color : Color.values()) {
+			modify = modify.replace("${Color."+color.toString()+"}", (this.properties.isColored()) ? color.getColorCode() : "");
 		}
 		return modify;
 	}
@@ -37,7 +37,7 @@ public abstract class Log {
 	 * Returns the current properties of the Log
 	 * @return this logs {@link #properties}
 	 */
-	public LogProperties properties() {
+	public LogProperties getProperties() {
 		return this.properties;
 	}
 	
@@ -45,7 +45,7 @@ public abstract class Log {
 	 * Sets a new {@link LogProperties} object to be used for this Log.
 	 * @param properties to be set
 	 */
-	public void properties(LogProperties properties) {
+	public void setProperies(LogProperties properties) {
 		this.properties = properties;
 	}
 	

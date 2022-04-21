@@ -43,11 +43,11 @@ public class FileLog extends Log {
 	public void log(LogLevel level, Category category, String message) {
 		Date now = new Date();
 		HashMap<String, String> replaces = new HashMap<String, String>();
-		replaces.put("${datetime}", this.properties().dateFormat().format(now));
+		replaces.put("${datetime}", this.getProperties().getDateFormat().format(now));
 		replaces.put("${loglevel_name}", level.name);
 		replaces.put("${category_name}", category.name);
-		replaces.put("${loglevel_color_code}", (this.properties().colored()) ? level.color.getColorCode() : "");
-		replaces.put("${category_color_code}", (this.properties().colored()) ? category.color.getColorCode() : "");
+		replaces.put("${loglevel_color_code}", (this.getProperties().isColored()) ? level.color.getColorCode() : "");
+		replaces.put("${category_color_code}", (this.getProperties().isColored()) ? category.color.getColorCode() : "");
 		replaces.put("${message}", message);
 		replaces.put("${Color.RESET}", "");
 		this.writer.println(this.format(replaces));
@@ -58,11 +58,11 @@ public class FileLog extends Log {
 	public void log(LogLevel level, Category category, Exception e) {
 		Date now = new Date();
 		HashMap<String, String> replaces = new HashMap<String, String>();
-		replaces.put("${datetime}", this.properties().dateFormat().format(now));
+		replaces.put("${datetime}", this.getProperties().getDateFormat().format(now));
 		replaces.put("${loglevel_name}", level.name);
 		replaces.put("${category_name}", category.name);
-		replaces.put("${loglevel_color_code}", (this.properties().colored()) ? level.color.getColorCode() : "");
-		replaces.put("${category_color_code}", (this.properties().colored()) ? category.color.getColorCode() : "");
+		replaces.put("${loglevel_color_code}", (this.getProperties().isColored()) ? level.color.getColorCode() : "");
+		replaces.put("${category_color_code}", (this.getProperties().isColored()) ? category.color.getColorCode() : "");
 		replaces.put("${message}", e.getMessage());
 		replaces.put("${Color.RESET}", "");
 		this.writer.println(this.format(replaces));
