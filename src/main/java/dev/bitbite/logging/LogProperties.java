@@ -33,7 +33,7 @@ public class LogProperties {
 	
 	/**
 	 * Returns the current Date and Time formatting
-	 * @return {@link SimpleDateFormat} - The format
+	 * @return the date and time format as {@link SimpleDateFormat}
 	 */
 	public SimpleDateFormat dateFormat() {
 		return this.dateFormat;
@@ -41,14 +41,14 @@ public class LogProperties {
 	
 	/**
 	 * Returns the current logformatting String representation.
-	 * @return String - The current logformatting
+	 * @return current logformatting string
 	 */
 	public String logFormat() {
 		return this.logFormat;
 	}
 	
 	/**
-	 * Returns if the ANSI Escape Sequences are enabled or disabled
+	 * Returns whether the log messages will be colorized using ANSI Escape Sequences or not.
 	 * @return boolean
 	 */
 	public boolean colored() {
@@ -66,7 +66,7 @@ public class LogProperties {
 	
 	/**
 	 * Sets a new Date and Time formatting.
-	 * @param simpleDateFormat - The format to be used.
+	 * @param simpleDateFormat to be used.
 	 */
 	public void dateFormat(SimpleDateFormat simpleDateFormat) {
 		this.dateFormat = simpleDateFormat;
@@ -74,15 +74,15 @@ public class LogProperties {
 	
 	/**
 	 * Sets a new Date and Time formatting.
-	 * @param format - The formatting String to be used by a {@link SimpleDateFormat}.
+	 * @param format String to be used for {@link SimpleDateFormat}.
 	 */
 	public void dateFormat(String format) {
 		this.dateFormat(new SimpleDateFormat(format));
 	}
 	
 	/**
-	 * Sets a new Logformatting template. 
-	 * @param format - The new template.
+	 * Sets a new Log formatting template. 
+	 * @param format to be set
 	 */
 	public void logFormat(String format) {
 		this.logFormat = format;
@@ -108,7 +108,7 @@ public class LogProperties {
 	
 	/**
 	 * Sets the default Color to be used as a fallback.
-	 * @param colorCode - The String value of a {@link Color}s colorcode.
+	 * @param colorCode of a {@link Color} as string.
 	 */
 	public void defaultColor(String colorCode) {
 		this.defaultColor = colorCode;
@@ -117,7 +117,7 @@ public class LogProperties {
 	
 	/**
 	 * Sets the default {@link Color} to be used as a fallback.
-	 * @param color - The desired {@link Color}.
+	 * @param color for usage as fallback
 	 */
 	public void defaultColor(Color color) {
 		this.defaultColor(color.getColorCode());
@@ -125,7 +125,7 @@ public class LogProperties {
 	
 	/**
 	 * Sets the option to use ANSI Escape Sequences for {@link Color}s to your preferences.
-	 * @param colored - True will activate the use of ANSI Escape Sequences, false will disable them.
+	 * @param colored True to enable ANSI Escape Sequences, false to disable them
 	 */
 	public void colored(boolean colored) {
 		this.colored = colored;

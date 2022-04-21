@@ -1,8 +1,7 @@
 package dev.bitbite.logging;
 
 /**
- * This is an holder class for some predefined {@link LogLevel}s for use without having to define them yourself. For the most projects,
- * they should be sufficient, but feel free to extend this class as needed.
+ * This class contains some default predefined {@link LogLevel}s. Add custom LogLevels by extending this class.
  */
 public class LogLevels {
 	public static final LogLevel NONE = new LogLevel("DEFAULT", Color.RESET, -1);

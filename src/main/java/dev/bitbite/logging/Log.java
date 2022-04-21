@@ -16,8 +16,8 @@ public abstract class Log {
 	
 	/**
 	 * Formats the template String defined in {@link LogProperties} accordingly with actual information.
-	 * @param replacements - A HashMap with user defined templates with their replacement information.
-	 * @return String - The formatted String for output purposes
+	 * @param replacements HashMap with user defined templates with their replacement information.
+	 * @return the formatted String
 	 */
 	protected String format(HashMap<String, String> replacements) {
 		String modify = this.properties.logFormat();
@@ -35,7 +35,7 @@ public abstract class Log {
 	
 	/**
 	 * Returns the current properties of the Log
-	 * @return - The {@link LogProperties}
+	 * @return this logs {@link #properties}
 	 */
 	public LogProperties properties() {
 		return this.properties;
@@ -43,7 +43,7 @@ public abstract class Log {
 	
 	/**
 	 * Sets a new {@link LogProperties} object to be used for this Log.
-	 * @param properties - The LogProperties to be set
+	 * @param properties to be set
 	 */
 	public void properties(LogProperties properties) {
 		this.properties = properties;
@@ -51,17 +51,17 @@ public abstract class Log {
 	
 	/**
 	 * Logs messages using an implementation class to an implemented output, using the provided {@link LogLevel}, {@link Category} and message.
-	 * @param level - The {@link LogLevel} of this log message
-	 * @param category - The {@link Category} of this message
-	 * @param message - The message to be logged
+	 * @param logLevel of this log message
+	 * @param category of this message
+	 * @param message to be logged
 	 */
-	public abstract void log(LogLevel level, Category category, String message);
+	public abstract void log(LogLevel logLevel, Category category, String message);
 	
 	/**
 	 * Logs exceptions using an implementation class to an implemented output, using the provided {@link LogLevel}, {@link Category} and {@link Exception}.
-	 * @param level - The {@link LogLevel} of the exception
-	 * @param category - The {@link Category} of the exception
-	 * @param exception - The {@link Exception} to be logged
+	 * @param logLevel of the exception
+	 * @param category of the exception
+	 * @param exception to be logged
 	 */
-	public abstract void log(LogLevel level, Category category, Exception exception);
+	public abstract void log(LogLevel logLevel, Category category, Exception exception);
 }

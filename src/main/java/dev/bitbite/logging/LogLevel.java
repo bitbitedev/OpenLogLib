@@ -10,10 +10,10 @@ public class LogLevel {
 	
 	
 	/**
-	 * Creates a new LogLevel object, which will hold a name for output purposes, a {@link Color} for formatting, as well as the level for filtering the output. 
-	 * @param name - The name the LogLevel shall use.
-	 * @param color - The {@link Color} which will be used.
-	 * @param level - Integer value for filtering the level.
+	 * Creates a new LogLevel object, which will hold a name, a {@link Color} for formatting, as well as the level for filtering the output.
+	 * @param name of the LogLevel
+	 * @param color of the LogLevel
+	 * @param level integer; higher is more important
 	 */
 	public LogLevel(String name, Color color, int level) {
 		this.name = name;

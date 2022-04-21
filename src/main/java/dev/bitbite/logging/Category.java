@@ -10,8 +10,8 @@ public class Category {
 	
 	/**
 	 * Creates a new Category Object, which will hold a name for display purposes, as well as a {@link Color}, which can be used for formatting
-	 * @param name - The name the Category shall use.
-	 * @param color - The {@link Color} to be used.
+	 * @param name of the Category
+	 * @param color used for colorization
 	 */
 	public Category(String name, Color color) {
 		this.name = name;
