@@ -63,7 +63,7 @@ public class LogProperties {
 	 * @param format String to be used for {@link SimpleDateFormat}.
 	 */
 	public void setDateFormat(String format) {
-		this.dateFormat(new SimpleDateFormat(format));
+		this.setDateFormat(new SimpleDateFormat(format));
 	}
 	
   /**

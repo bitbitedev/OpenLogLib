@@ -19,9 +19,9 @@ public abstract class Log {
 	 * @param replacements HashMap with user defined templates with their replacement information.
 	 * @return the formatted String
 	 */
-	protected String format(HashMap<String, String> replaces) {
+	protected String format(HashMap<String, String> replacements) {
 		String modify = this.properties.getLogFormat();
-		for(var entry : replaces.entrySet()) {
+		for(var entry : replacements.entrySet()) {
 			modify = modify.replace(entry.getKey(), (this.properties.isColored()) ? entry.getValue() : (!entry.getValue().startsWith("\u001b")) ? entry.getValue() : "");
 		}
 		for(var entry : this.properties.getTemplates().entrySet()) {
