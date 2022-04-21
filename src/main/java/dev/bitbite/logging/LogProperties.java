@@ -3,6 +3,10 @@ package dev.bitbite.logging;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
+/**
+ * Holds all the property information for the {@link Log}.
+ *
+ */
 public class LogProperties {
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd - HH:mm:ss");
 	private String logFormat = "${default_color}${delimiter_open}${datetime}${delimiter_close}${loglevel_color_code}${delimiter_open}${loglevel_name}${delimiter_close}${category_color_code}${delimiter_open}${category_name}${delimiter_close}${default_color}: ${message}${Color.RESET}";
@@ -19,7 +23,7 @@ public class LogProperties {
 		this.revalidate();
 	}
 	
-	public void revalidate() {
+	private void revalidate() {
 		HashMap<String, String> templates = new HashMap<String, String>();
 		templates.put("${delimiter_open}", this.delimiter[0]);
 		templates.put("${delimiter_close}", this.delimiter[1]);
@@ -27,14 +31,26 @@ public class LogProperties {
 		this.templates = templates;
 	}
 	
+	/**
+	 * Returns the current Date and Time formatting
+	 * @return {@link SimpleDateFormat} - The format
+	 */
 	public SimpleDateFormat dateFormat() {
 		return this.dateFormat;
 	}
 	
+	/**
+	 * Returns the current logformatting String representation.
+	 * @return String - The current logformatting
+	 */
 	public String logFormat() {
 		return this.logFormat;
 	}
 	
+	/**
+	 * Returns if the ANSI Escape Sequences are enabled or disabled
+	 * @return boolean
+	 */
 	public boolean colored() {
 		return this.colored;
 	}
@@ -43,40 +59,74 @@ public class LogProperties {
 		return this.templates;
 	}
 	
+	@Deprecated
 	public HashMap<String, String> colors() {
 		return this.colors;
 	}
 	
-	public void dateFormat(SimpleDateFormat sdf) {
-		this.dateFormat = sdf;
+	/**
+	 * Sets a new Date and Time formatting.
+	 * @param simpleDateFormat - The format to be used.
+	 */
+	public void dateFormat(SimpleDateFormat simpleDateFormat) {
+		this.dateFormat = simpleDateFormat;
 	}
 	
+	/**
+	 * Sets a new Date and Time formatting.
+	 * @param format - The formatting String to be used by a {@link SimpleDateFormat}.
+	 */
 	public void dateFormat(String format) {
-		this.dateFormat = new SimpleDateFormat(format);
+		this.dateFormat(new SimpleDateFormat(format));
 	}
 	
+	/**
+	 * Sets a new Logformatting template. 
+	 * @param format - The new template.
+	 */
 	public void logFormat(String format) {
 		this.logFormat = format;
 	}
 	
+	/**
+	 * Sets the opening and closing delimiters.
+	 * @param delimiter - Array representation of the opening and closing delimiters. Index 0 will be open, 1 the closing delimiter.
+	 */
 	public void delimiter(String[] delimiter) {
 		this.delimiter = delimiter;
 		this.revalidate();
 	}
 	
+	/**
+	 * Sets the opening and closing delimiters.
+	 * @param open - The opening delimiter
+	 * @param close - The closing delimiter.
+	 */
 	public void delimiter(String open, String close) {
 		this.delimiter(new String[] {open, close});
 	}
 	
+	/**
+	 * Sets the default Color to be used as a fallback.
+	 * @param colorCode - The String value of a {@link Color}s colorcode.
+	 */
 	public void defaultColor(String colorCode) {
 		this.defaultColor = colorCode;
 		this.revalidate();
 	}
 	
+	/**
+	 * Sets the default {@link Color} to be used as a fallback.
+	 * @param color - The desired {@link Color}.
+	 */
 	public void defaultColor(Color color) {
 		this.defaultColor(color.getColorCode());
 	}
 	
+	/**
+	 * Sets the option to use ANSI Escape Sequences for {@link Color}s to your preferences.
+	 * @param colored - True will activate the use of ANSI Escape Sequences, false will disable them.
+	 */
 	public void colored(boolean colored) {
 		this.colored = colored;
 	}
