@@ -6,27 +6,17 @@ import java.util.HashMap;
 public class LogProperties {
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd - HH:mm:ss");
 	private String logFormat = "${default_color}${delimiter_open}${datetime}${delimiter_close}${loglevel_color_code}${delimiter_open}${loglevel_name}${delimiter_close}${category_color_code}${delimiter_open}${category_name}${delimiter_close}${default_color}: ${message}${Color.RESET}";
-	private String[] delimiter = new String[] {"[", "]"};
-	private String defaultColor = Color.RESET.getColorCode();
 	private boolean colored = false;
-	private HashMap<String, String> colors = new HashMap<String, String>();
 	private HashMap<String, String> templates = new HashMap<String, String>();
 	
 	public LogProperties() {
-		for(Color color : Color.values()) {
-			this.colors.put("Color."+color.toString(), color.getColorCode());
-		}
-		this.revalidate();
+		this.templates = new HashMap<String, String>();
+		templates.put("${delimiter_open}", "[");
+		templates.put("${delimiter_close}", "]");
+		templates.put("${default_color}", Color.RESET.getColorCode());
 	}
 	
-	public void revalidate() {
-		HashMap<String, String> templates = new HashMap<String, String>();
-		templates.put("${delimiter_open}", this.delimiter[0]);
-		templates.put("${delimiter_close}", this.delimiter[1]);
-		templates.put("${default_color}", (this.colored) ? this.defaultColor : "");
-		this.templates = templates;
-	}
-	
+	// -------------------- GETTER --------------------
 	public SimpleDateFormat getDateFormat() {
 		return this.dateFormat;
 	}
@@ -43,10 +33,7 @@ public class LogProperties {
 		return this.templates;
 	}
 	
-	public HashMap<String, String> getColors() {
-		return this.colors;
-	}
-	
+	// -------------------- SETTER --------------------
 	public void setDateFormat(SimpleDateFormat sdf) {
 		this.dateFormat = sdf;
 	}
@@ -60,8 +47,8 @@ public class LogProperties {
 	}
 	
 	public void setDelimiter(String[] delimiter) {
-		this.delimiter = delimiter;
-		this.revalidate();
+		this.templates.replace("${delimiter_open}", delimiter[0]);
+		this.templates.replace("${delimiter_close}", delimiter[1]);
 	}
 	
 	public void setDelimiter(String open, String close) {
@@ -69,8 +56,7 @@ public class LogProperties {
 	}
 	
 	public void setDefaultColor(String colorCode) {
-		this.defaultColor = colorCode;
-		this.revalidate();
+		this.templates.replace("${default_color}", colorCode);
 	}
 	
 	public void setDefaultColor(Color color) {
