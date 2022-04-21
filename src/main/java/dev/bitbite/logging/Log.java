@@ -13,13 +13,13 @@ public abstract class Log {
 	protected String format(HashMap<String, String> replaces) {
 		String modify = this.properties.getLogFormat();
 		for(var entry : replaces.entrySet()) {
-			modify = modify.replace(entry.getKey(), entry.getValue());
+			modify = modify.replace(entry.getKey(), (this.properties.isColored()) ? entry.getValue() : (!entry.getValue().startsWith("\u001b")) ? entry.getValue() : "");
 		}
 		for(var entry : this.properties.getTemplates().entrySet()) {
-			modify = modify.replace(entry.getKey(), entry.getValue());
+			modify = modify.replace(entry.getKey(), (this.properties.isColored()) ? entry.getValue() : (!entry.getValue().startsWith("\u001b")) ? entry.getValue() : "");
 		}
-		for(var entry : this.properties.getColors().entrySet()) {
-			modify = modify.replace("${"+entry.getKey()+"}", entry.getValue());
+		for(Color color : Color.values()) {
+			modify = modify.replace("${Color."+color.toString()+"}", (this.properties.isColored()) ? color.getColorCode() : "");
 		}
 		return modify;
 	}
