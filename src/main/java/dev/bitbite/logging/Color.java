@@ -1,5 +1,8 @@
 package dev.bitbite.logging;
 
+/*
+ * Predefined Colors to be used wherever you want. These Colorcodes only work in ANSI Escape Sequence supporting environments.
+ */
 public enum Color {
 	RESET ("\u001b[0m"),
 	
@@ -42,6 +45,10 @@ public enum Color {
 		this.colorcode = colorcode;
 	}
 	
+	/**
+	 * Returns the String representation of the colorcode associated with a given {@link Color}.
+	 * @return colorcode as ANSI Escape Sequence String
+	 */
 	public String getColorCode() {
 		return this.colorcode;
 	}

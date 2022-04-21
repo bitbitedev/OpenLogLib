@@ -1,5 +1,8 @@
 package dev.bitbite.logging;
 
+/**
+ * This class contains some default predefined {@link LogLevel}s. Add custom LogLevels by extending this class.
+ */
 public class LogLevels {
 	public static final LogLevel NONE = new LogLevel("DEFAULT", Color.RESET, -1);
 	public static final LogLevel DEBUG = new LogLevel("Debug", Color.BLUE, 0);
