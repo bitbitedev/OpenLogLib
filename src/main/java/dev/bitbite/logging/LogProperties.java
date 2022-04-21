@@ -27,57 +27,57 @@ public class LogProperties {
 		this.templates = templates;
 	}
 	
-	public SimpleDateFormat dateFormat() {
+	public SimpleDateFormat getDateFormat() {
 		return this.dateFormat;
 	}
 	
-	public String logFormat() {
+	public String getLogFormat() {
 		return this.logFormat;
 	}
 	
-	public boolean colored() {
+	public boolean isColored() {
 		return this.colored;
 	}
 	
-	public HashMap<String, String> templates() {
+	public HashMap<String, String> getTemplates() {
 		return this.templates;
 	}
 	
-	public HashMap<String, String> colors() {
+	public HashMap<String, String> getColors() {
 		return this.colors;
 	}
 	
-	public void dateFormat(SimpleDateFormat sdf) {
+	public void setDateFormat(SimpleDateFormat sdf) {
 		this.dateFormat = sdf;
 	}
 	
-	public void dateFormat(String format) {
+	public void setDateFormat(String format) {
 		this.dateFormat = new SimpleDateFormat(format);
 	}
 	
-	public void logFormat(String format) {
+	public void setLogFormat(String format) {
 		this.logFormat = format;
 	}
 	
-	public void delimiter(String[] delimiter) {
+	public void setDelimiter(String[] delimiter) {
 		this.delimiter = delimiter;
 		this.revalidate();
 	}
 	
-	public void delimiter(String open, String close) {
-		this.delimiter(new String[] {open, close});
+	public void setDelimiter(String open, String close) {
+		this.setDelimiter(new String[] {open, close});
 	}
 	
-	public void defaultColor(String colorCode) {
+	public void setDefaultColor(String colorCode) {
 		this.defaultColor = colorCode;
 		this.revalidate();
 	}
 	
-	public void defaultColor(Color color) {
-		this.defaultColor(color.getColorCode());
+	public void setDefaultColor(Color color) {
+		this.setDefaultColor(color.getColorCode());
 	}
 	
-	public void colored(boolean colored) {
+	public void isColored(boolean colored) {
 		this.colored = colored;
 	}
 }

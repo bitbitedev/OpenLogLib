@@ -11,24 +11,24 @@ public abstract class Log {
 	}
 	
 	protected String format(HashMap<String, String> replaces) {
-		String modify = this.properties.logFormat();
+		String modify = this.properties.getLogFormat();
 		for(var entry : replaces.entrySet()) {
 			modify = modify.replace(entry.getKey(), entry.getValue());
 		}
-		for(var entry : this.properties.templates().entrySet()) {
+		for(var entry : this.properties.getTemplates().entrySet()) {
 			modify = modify.replace(entry.getKey(), entry.getValue());
 		}
-		for(var entry : this.properties.colors().entrySet()) {
+		for(var entry : this.properties.getColors().entrySet()) {
 			modify = modify.replace("${"+entry.getKey()+"}", entry.getValue());
 		}
 		return modify;
 	}
 	
-	public LogProperties properties() {
+	public LogProperties getProperties() {
 		return this.properties;
 	}
 	
-	public void properties(LogProperties properties) {
+	public void setProperies(LogProperties properties) {
 		this.properties = properties;
 	}
 	
