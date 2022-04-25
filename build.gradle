@@ -17,6 +17,7 @@ java {
 artifacts {
     archives javadocJar, sourcesJar
 }
+
 javadoc {
     if(JavaVersion.current().isJava9Compatible()) {
         options.addBooleanOption('html5', true)
@@ -31,7 +32,7 @@ dependencies {
     // Use JUnit Jupiter for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
     
-    implementation project(':Ansi')
+    implementation 'dev.thatsnasu:Ansi:1.0.0'
 }
 
 tasks.named('test') {
