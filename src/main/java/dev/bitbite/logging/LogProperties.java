@@ -3,116 +3,168 @@ package dev.bitbite.logging;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
+import dev.thatsnasu.ansi.Color;
+import dev.thatsnasu.ansi.Color3b;
+import dev.thatsnasu.ansi.Color4b;
+import dev.thatsnasu.ansi.Color8b;
+
 /**
  * Holds all the property information for the {@link Log}.
  *
  */
 public class LogProperties {
-	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd - HH:mm:ss");
-	private String logFormat = "${default_color}${delimiter_open}${datetime}${delimiter_close}${loglevel_color_code}${delimiter_open}${loglevel_name}${delimiter_close}${category_color_code}${delimiter_open}${category_name}${delimiter_close}${default_color}: ${message}${Color.RESET}";
-	private boolean colored = false;
-	private HashMap<String, String> templates = new HashMap<String, String>();
+	private SimpleDateFormat dateTimeFormat;
+	private HashMap<String, String> templates;
+	private boolean usesAnsi;
+	private String logTemplate;
 	
+	
+	/**
+	 * Creates a new LogProperties Object and initializes it with default values.
+	 */
 	public LogProperties() {
+		this.dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd - HH:mm:ss");
 		this.templates = new HashMap<String, String>();
-		templates.put("${delimiter_open}", "[");
-		templates.put("${delimiter_close}", "]");
-		templates.put("${default_color}", Color.RESET.getColorCode());
+		this.templates.put(TemplateElements.DelimiterOpen, "[");
+		this.templates.put(TemplateElements.DelimiterClose, "]");
+		this.templates.put(TemplateElements.DefaultColor, Color3b.RESET.toString());
+		this.templates.put(TemplateElements.MetaDataSeparator, ": ");
+		this.logTemplate = TemplateElements.DefaultColor+
+				TemplateElements.DelimiterOpen+
+				TemplateElements.DateTime+
+				TemplateElements.DelimiterClose+
+				TemplateElements.LogLevelFormat+
+				TemplateElements.DelimiterOpen+
+				TemplateElements.LogLevelName+
+				TemplateElements.DelimiterClose+
+				TemplateElements.CategoryFormat+
+				TemplateElements.DelimiterOpen+
+				TemplateElements.CategoryName+
+				TemplateElements.DelimiterClose+
+				TemplateElements.DefaultColor+
+				TemplateElements.MetaDataSeparator+
+				TemplateElements.Message+
+				Color3b.RESET.toString();
 	}
   
 	// -------------------- GETTER --------------------
 	/**
-	 * Returns the current Date and Time formatting
-	 * @return the date and time format as {@link SimpleDateFormat}
+	 * Returns the current {@link SimpleDateFormat}.
+	 * @return datetimeFormat used.
 	 */
-	public SimpleDateFormat getDateFormat() {
-		return this.dateFormat;
+	public SimpleDateFormat getDateTimeFormat() {
+		return this.dateTimeFormat;
 	}
 	
 	/**
-	 * Returns the current logformatting String representation.
-	 * @return current logformatting string
+	 * Returns the current log template String representation.
+	 * @return current log template String
 	 */
-	public String getLogFormat() {
-		return this.logFormat;
+	public String getLogTemplate() {
+		return this.logTemplate;
 	}
 	
 	/**
-	 * Returns whether the log messages will be colorized using ANSI Escape Sequences or not.
-	 * @return boolean
+	 * Returns the current template to value mappings as {@link HashMap}.
+	 * @return templates that are mapped
 	 */
-	public boolean isColored() {
-		return this.colored;
-	}
-	
 	public HashMap<String, String> getTemplates() {
 		return this.templates;
 	}
 	
+	/**
+	 * Returns if the Log object will use Ansi Escape Sequences for formatting.
+	 * @return usesAnsi of the Log Object.
+	 */
+	public boolean usesAnsi() {
+		return this.usesAnsi;
+	}
+	
 	// -------------------- SETTER --------------------
 	/**
-	 * Sets a new Date and Time formatting.
-	 * @param simpleDateFormat to be used.
+	 * Sets a new {@link SimpleDateFormat}.
+	 * @param dateTimeFormat to be set
 	 */
-	public void setDateFormat(SimpleDateFormat simpleDateFormat) {
-		this.dateFormat = simpleDateFormat;
+	public void setDateTimeFormat(SimpleDateFormat dateTimeFormat) {
+		this.dateTimeFormat = dateTimeFormat;
 	}
 	
 	/**
-	 * Sets a new Date and Time formatting.
-	 * @param format String to be used for {@link SimpleDateFormat}.
-	 */
-	public void setDateFormat(String format) {
-		this.setDateFormat(new SimpleDateFormat(format));
-	}
-	
-  /**
 	 * Sets a new Log formatting template. 
-	 * @param format to be set
+	 * @param template to be set
 	 */
-	public void setLogFormat(String format) {
-		this.logFormat = format;
+	public void setLogTemplate(String template) {
+		this.logTemplate = template;
 	}
 	
-  /**
-	 * Sets the opening and closing delimiters.
-	 * @param delimiter Array representation of the opening and closing delimiters. Index 0 will be open, 1 the closing delimiter.
+	/**
+	 * Sets whether or not the Log Object uses Ansi.
+	 * @param usesAnsi to be set
+	 */
+	public void usesAnsi(boolean usesAnsi) {
+		this.usesAnsi = usesAnsi;
+	}
+	
+	/**
+	 * Sets a new value for a given template String.
+	 * @param templateKey of the template element
+	 * @param templateValue of the templateKey
+	 */
+	public void setTemplateElement(String templateKey, String templateValue) {
+		if(this.templates.containsKey(templateKey)) {
+			this.templates.replace(templateKey, templateValue);
+		} else {
+			this.templates.put(templateKey, templateValue);
+		}
+	}
+	
+	/**
+	 * Sets new delimiters.
+	 * @param delimiter to be set
 	 */
 	public void setDelimiter(String[] delimiter) {
-		this.templates.replace("${delimiter_open}", delimiter[0]);
-		this.templates.replace("${delimiter_close}", delimiter[1]);
+		this.templates.replace(TemplateElements.DelimiterOpen, delimiter[0]);
+		this.templates.replace(TemplateElements.DelimiterClose, delimiter[1]);
 	}
 	
-  /**
-	 * Sets the opening and closing delimiters.
-	 * @param open The opening delimiter
-	 * @param close The closing delimiter.
+	/**
+	 * Sets new delimiters.
+	 * @param openDelimiter to be set
+	 * @param closeDelimiter to be set
 	 */
-	public void setDelimiter(String open, String close) {
-		this.setDelimiter(new String[] {open, close});
+	public void setDelimiters(String openDelimiter, String closeDelimiter) {
+		this.setDelimiter(new String[] {openDelimiter, closeDelimiter});
 	}
 	
-  /**
-	 * Sets the default Color to be used as a fallback.
-	 * @param colorCode of a {@link Color} as string.
+	/**
+	 * Sets a new default {@link Color3b}.
+	 * @param color3b to be set
 	 */
-	public void setDefaultColor(String colorCode) {
-		this.templates.replace("${default_color}", colorCode);
+	public void setDefaultColor(Color3b color3b) {
+		this.setDefaultColor(new Color(color3b.getHexCode()));
 	}
 	
-  /**
-	 * Sets the default {@link Color} to be used as a fallback.
-	 * @param color for usage as fallback
+	/**
+	 * Sets a new default {@link Color4b}.
+	 * @param color4b to be set
+	 */
+	public void setDefaultColor(Color4b color4b) {
+		this.setDefaultColor(new Color(color4b.getHexCode()));
+	}
+	
+	/**
+	 * Sets a new default {@link Color8b}.
+	 * @param color8b to be set
+	 */
+	public void setDefaultColor(Color8b color8b) {
+		this.setDefaultColor(new Color(color8b.getHexCode()));
+	}
+	
+	/**
+	 * Sets a new default {@link Color}.
+	 * @param color to be set
 	 */
 	public void setDefaultColor(Color color) {
-		this.setDefaultColor(color.getColorCode());
-	}
-  
-  /**
-	 * Sets the option to use ANSI Escape Sequences for {@link Color}s to your preferences.
-	 * @param colored True to enable ANSI Escape Sequences, false to disable them
-	 */
-	public void isColored(boolean colored) {
-		this.colored = colored;
+		this.templates.replace(TemplateElements.DefaultColor, color.toString());
 	}
 }

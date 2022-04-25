@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.util.Date;
-import java.util.HashMap;
 
 import dev.bitbite.logging.Category;
 import dev.bitbite.logging.Log;
@@ -40,32 +38,14 @@ public class FileLog extends Log {
 	}
 
 	@Override
-	public void log(LogLevel level, Category category, String message) {
-		Date now = new Date();
-		HashMap<String, String> replaces = new HashMap<String, String>();
-		replaces.put("${datetime}", this.getProperties().getDateFormat().format(now));
-		replaces.put("${loglevel_name}", level.name);
-		replaces.put("${category_name}", category.name);
-		replaces.put("${loglevel_color_code}", (this.getProperties().isColored()) ? level.color.getColorCode() : "");
-		replaces.put("${category_color_code}", (this.getProperties().isColored()) ? category.color.getColorCode() : "");
-		replaces.put("${message}", message);
-		replaces.put("${Color.RESET}", "");
-		this.writer.println(this.format(replaces));
+	public void log(LogLevel logLevel, Category category, String message) {
+		this.writer.println(this.format(logLevel, category, message));
 		this.writer.flush();
 	}
 
 	@Override
-	public void log(LogLevel level, Category category, Exception e) {
-		Date now = new Date();
-		HashMap<String, String> replaces = new HashMap<String, String>();
-		replaces.put("${datetime}", this.getProperties().getDateFormat().format(now));
-		replaces.put("${loglevel_name}", level.name);
-		replaces.put("${category_name}", category.name);
-		replaces.put("${loglevel_color_code}", (this.getProperties().isColored()) ? level.color.getColorCode() : "");
-		replaces.put("${category_color_code}", (this.getProperties().isColored()) ? category.color.getColorCode() : "");
-		replaces.put("${message}", e.getMessage());
-		replaces.put("${Color.RESET}", "");
-		this.writer.println(this.format(replaces));
+	public void log(LogLevel logLevel, Category category, Exception exception) {
+		this.writer.println(this.format(logLevel, category, exception.getMessage()));
 		this.writer.flush();
 	}
 

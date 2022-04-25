@@ -8,3 +8,6 @@
  */
 
 rootProject.name = 'OpenLogLib'
+
+include ':Ansi'
+project(':Ansi').projectDir = new File('../Ansi')
