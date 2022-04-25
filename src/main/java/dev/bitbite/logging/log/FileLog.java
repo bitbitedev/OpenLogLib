@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import dev.bitbite.logging.Category;
 import dev.bitbite.logging.Log;
@@ -19,13 +20,24 @@ public class FileLog extends Log {
 	
 	/**
 	 * Creates a Log object and a new output File, where the log will be written to.
-	 * @param logFile - The output {@link File}.
-	 * @throws FileNotFoundException - if the output file could not be created.
+	 * @param logFile to write to
+	 * @throws FileNotFoundException if the output {@link File} could not be created.
 	 */
 	public FileLog(File logFile) throws FileNotFoundException {
 		this.logFile = logFile;
 		if(!this.logFile.getParentFile().exists()) this.logFile.getParentFile().mkdirs();
 		this.writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(this.logFile)));
+	}
+	
+	/**
+	 * Creates a new Log Object and a new output File, where the log will be written to. Afterwards registers itself to a given {@link ArrayList}.
+	 * @param logFile to write to
+	 * @param logs to be registered to
+	 * @throws FileNotFoundException if the output {@link File} could not be created
+	 */
+	public FileLog(File logFile, ArrayList<Log> logs) throws FileNotFoundException {
+		this(logFile);
+		logs.add(this);
 	}
 	
 	/**

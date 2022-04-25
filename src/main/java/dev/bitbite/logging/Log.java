@@ -26,10 +26,10 @@ public abstract class Log {
 	protected String format(LogLevel logLevel, Category category, String message, HashMap<String, String> replacements) {
 		String modify = this.properties.getLogTemplate();
 		for(var replacement : replacements.entrySet()) {
-			modify = modify.replace(replacement.getKey(), replacement.getValue());
+			modify = modify.replace(replacement.getKey(), (!replacement.getValue().contains("\u001b[") || this.properties.usesAnsi()) ? replacement.getValue() : "");
 		}
 		for(var template : this.properties.getTemplates().entrySet()) {
-			modify = modify.replace(template.getKey(), template.getValue());
+			modify = modify.replace(template.getKey(), (!template.getValue().contains("\u001b[") || this.properties.usesAnsi()) ? template.getValue() : "");
 		}
 		return this.replaceDynamicElements(logLevel, category, message, modify);
 	}
@@ -44,7 +44,7 @@ public abstract class Log {
 	protected String format(LogLevel logLevel, Category category, String message) {
 		String modify = this.properties.getLogTemplate();
 		for(var template : this.properties.getTemplates().entrySet()) {
-			modify = modify.replace(template.getKey(), template.getValue());
+			modify = modify.replace(template.getKey(), (!template.getValue().contains("\u001b[") || this.properties.usesAnsi()) ? template.getValue() : "");
 		}
 		return this.replaceDynamicElements(logLevel, category, message, modify);
 	}

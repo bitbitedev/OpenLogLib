@@ -29,6 +29,7 @@ public class LogProperties {
 		this.templates.put(TemplateElements.DelimiterClose, "]");
 		this.templates.put(TemplateElements.DefaultColor, Color3b.RESET.toString());
 		this.templates.put(TemplateElements.MetaDataSeparator, ": ");
+		this.templates.put(TemplateElements.ResetFormat, Color3b.RESET.toString());
 		this.logTemplate = TemplateElements.DefaultColor+
 				TemplateElements.DelimiterOpen+
 				TemplateElements.DateTime+
@@ -44,7 +45,7 @@ public class LogProperties {
 				TemplateElements.DefaultColor+
 				TemplateElements.MetaDataSeparator+
 				TemplateElements.Message+
-				Color3b.RESET.toString();
+				TemplateElements.ResetFormat;
 	}
   
 	// -------------------- GETTER --------------------

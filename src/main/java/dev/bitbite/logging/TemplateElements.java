@@ -11,4 +11,5 @@ public class TemplateElements {
 	public static final String CategoryName = "{categoryname}";
 	public static final String Message = "${message}";
 	public static final String MetaDataSeparator = "${metadataseparator}";
+	public static final String ResetFormat = "${resetformat}";
 }
