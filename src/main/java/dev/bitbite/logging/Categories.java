@@ -11,7 +11,7 @@ import dev.thatsnasu.ansi.Color3b;
  */
 public class Categories {
 	public static final Category NONE = new Category("DEFAULT", new Ansi(Color3b.RESET));
-	public static final Category DEBUG = new Category("DEFAULT", new Ansi(Color3b.MAGENTA));
-	public static final Category FILE = new Category("DEFAULT", new Ansi(Color3b.CYAN));
-	public static final Category SQL = new Category("DEFAULT", new Ansi(Color3b.YELLOW));
+	public static final Category DEBUG = new Category("Debug", new Ansi(Color3b.MAGENTA));
+	public static final Category FILE = new Category("File", new Ansi(Color3b.CYAN));
+	public static final Category SQL = new Category("SQL", new Ansi(Color3b.YELLOW));
 }
