@@ -1,10 +1,12 @@
 plugins {
     id 'java-library'
     id 'eclipse'
+    id 'maven-publish'
+    id 'signing'
 }
 
 group = 'dev.bitbite'
-version = '0.0.1'
+version = '0.1.0'
 
 java {
 	toolchain {
@@ -12,6 +14,53 @@ java {
 	}
     withJavadocJar()
     withSourcesJar()
+}
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			from components.java
+			groupId = 'dev.bitbite'
+			artifactId = 'OpenLogLib'
+			version = '0.1.0'
+			pom {
+				name = 'OpenLogLib - Logging made easy'
+				description = 'OpenLogLib is a easy to use library for logging messages by providing the required methods, while keeping the API lightweight and logical.'
+				url = 'https://github.com/bitbitedev/openloglib'
+				licenses {
+					license {
+						name = 'MIT License'
+						url = 'https://github.com/bitbitedev/openloglib/blob/main/LICENSE'
+					}
+				}
+				developers {
+					developer {
+						id = 'bitbite'
+						name = 'Bitbite Team'
+						email = 'team@bitbite.dev'
+						organization = 'bitbite'
+						organizationUrl = 'https://bitbite.dev'
+					}
+				}
+				scm {
+					connection = 'scm:git:git://gihub.com/bitbitedev/openloglib.git'
+					url = 'https://github.com/bitbitedev/openloglib'
+				}
+			}
+		}
+	}
+	repositories {
+		maven {
+			name = "OSSRH"
+			credentials {
+				username = ossrhUsername
+				password = ossrhPassword
+			}
+			def releasesRepositoryURL = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+			def snapshotRepositoryURL = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+			url = version.endsWith('SNAPSHOT') ? snapshotRepositoryURL : releasesRepositoryURL
+		}
+	}
 }
 
 artifacts {
@@ -32,7 +81,7 @@ dependencies {
     // Use JUnit Jupiter for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
     
-    implementation 'dev.thatsnasu:Ansi:1.0.0'
+    implementation 'dev.thatsnasu:Ansi:1.1.0'
 }
 
 tasks.named('test') {
