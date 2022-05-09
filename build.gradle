@@ -63,6 +63,10 @@ publishing {
 	}
 }
 
+signing {
+	sign publishing.publications.maven
+}
+
 artifacts {
     archives javadocJar, sourcesJar
 }
