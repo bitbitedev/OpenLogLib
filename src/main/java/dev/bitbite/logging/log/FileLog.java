@@ -50,15 +50,19 @@ public class FileLog extends Log {
 	}
 
 	@Override
-	public void log(LogLevel logLevel, Category category, String message) {
-		this.writer.println(this.format(logLevel, category, message));
+	public String log(LogLevel logLevel, Category category, String message) {
+		String formattedMessage = this.format(logLevel, category, message);
+		this.writer.println(formattedMessage);
 		this.writer.flush();
+		return formattedMessage;
 	}
 
 	@Override
-	public void log(LogLevel logLevel, Category category, Exception exception) {
-		this.writer.println(this.format(logLevel, category, exception.getMessage()));
+	public String log(LogLevel logLevel, Category category, Exception exception) {
+		String formattedMessage = this.format(logLevel, category, exception.getMessage());
+		this.writer.println(formattedMessage);
 		this.writer.flush();
+		return formattedMessage;
 	}
 
 }

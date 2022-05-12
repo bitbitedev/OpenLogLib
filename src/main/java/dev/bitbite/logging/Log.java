@@ -88,7 +88,7 @@ public abstract class Log {
 	 * @param category of this message
 	 * @param message to be logged
 	 */
-	public abstract void log(LogLevel logLevel, Category category, String message);
+	public abstract String log(LogLevel logLevel, Category category, String message);
 	
 	/**
 	 * Logs exceptions using an implementation class to an implemented output, using the provided {@link LogLevel}, {@link Category} and {@link Exception}.
@@ -96,5 +96,5 @@ public abstract class Log {
 	 * @param category of the exception
 	 * @param exception to be logged
 	 */
-	public abstract void log(LogLevel logLevel, Category category, Exception exception);
+	public abstract String log(LogLevel logLevel, Category category, Exception exception);
 }
