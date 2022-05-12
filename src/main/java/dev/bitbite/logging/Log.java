@@ -87,6 +87,7 @@ public abstract class Log {
 	 * @param logLevel of this log message
 	 * @param category of this message
 	 * @param message to be logged
+	 * @return the logged message
 	 */
 	public abstract String log(LogLevel logLevel, Category category, String message);
 	
@@ -95,6 +96,7 @@ public abstract class Log {
 	 * @param logLevel of the exception
 	 * @param category of the exception
 	 * @param exception to be logged
+	 * @return the logged message
 	 */
 	public abstract String log(LogLevel logLevel, Category category, Exception exception);
 }
