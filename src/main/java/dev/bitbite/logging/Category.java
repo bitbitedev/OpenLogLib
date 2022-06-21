@@ -19,4 +19,13 @@ public class Category {
 		this.name = name;
 		this.ansi = ansi;
 	}
+	
+	/**
+	 * Creates a new Category Object, which will hold a name for display purposes.
+	 * @param name of the Category
+	 */
+	public Category(String name) {
+		this.name = name;
+		this.ansi = new Ansi();
+	}
 }
