@@ -54,10 +54,22 @@ public class FileLog extends Log {
 		this.writer.println(this.format(logLevel, category, message));
 		this.writer.flush();
 	}
+	
+	@Override
+	public void log(LogLevel logLevel, String message) {
+		this.writer.println(this.format(logLevel, message));
+		this.writer.flush();
+	}
 
 	@Override
 	public void log(LogLevel logLevel, Category category, Exception exception) {
 		this.writer.println(this.format(logLevel, category, exception.getMessage()));
+		this.writer.flush();
+	}
+
+	@Override
+	public void log(LogLevel logLevel, Exception exception) {
+		this.writer.println(this.format(logLevel, exception.getMessage()));
 		this.writer.flush();
 	}
 

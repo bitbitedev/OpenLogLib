@@ -27,9 +27,19 @@ public class ConsoleLog extends Log {
 	public void log(LogLevel logLevel, Category category, String message) {
 		System.out.println(this.format(logLevel, category, message));
 	}
+	
+	@Override
+	public void log(LogLevel logLevel, String message) {
+		System.out.println(this.format(logLevel, message));
+	}
 
 	@Override
 	public void log(LogLevel logLevel, Category category, Exception exception) {
 		System.out.println(this.format(logLevel, category, exception.getMessage()));
+	}
+	
+	@Override
+	public void log(LogLevel logLevel, Exception exception) {
+		System.out.println(this.format(logLevel, exception.getMessage()));
 	}
 }
