@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 import dev.bitbite.logging.Category;
@@ -25,7 +26,7 @@ public class FileLog extends Log {
 	 */
 	public FileLog(File logFile) throws FileNotFoundException {
 		this.logFile = logFile;
-		if(!this.logFile.getParentFile().exists()) this.logFile.getParentFile().mkdirs();
+		if(!Files.exists(this.logFile.toPath().toAbsolutePath().getParent())) this.logFile.toPath().toAbsolutePath().getParent().toFile().mkdirs();
 		this.writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(this.logFile)));
 	}
 	
@@ -48,7 +49,7 @@ public class FileLog extends Log {
 	public FileLog(String path) throws FileNotFoundException {
 		this(new File(path));
 	}
-
+	
 	@Override
 	public void log(LogLevel logLevel, Category category, String message) {
 		this.writer.println(this.format(logLevel, category, message));
