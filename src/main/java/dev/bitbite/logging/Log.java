@@ -99,6 +99,8 @@ public abstract class Log {
 		preFormattedString = preFormattedString.replace("[]", "");
 		//preFormattedString = (category != null) ? preFormattedString.replace(TemplateElements.CategoryName, category.name) : "";
 		preFormattedString = preFormattedString.replace(TemplateElements.DateTime, this.properties.getDateTimeFormat().format(new Date()));
+		preFormattedString = preFormattedString.replace(TemplateElements.Date, this.properties.getDateFormat().format(new Date()));
+		preFormattedString = preFormattedString.replace(TemplateElements.Time, this.properties.getTimeFormat().format(new Date()));
 		return preFormattedString.replace(TemplateElements.Message, message);
 	}
 	

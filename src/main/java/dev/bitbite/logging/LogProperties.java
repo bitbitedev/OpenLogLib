@@ -14,6 +14,8 @@ import dev.thatsnasu.ansi.Color8b;
  */
 public class LogProperties {
 	private SimpleDateFormat dateTimeFormat;
+	private SimpleDateFormat dateFormat;
+	private SimpleDateFormat timeFormat;
 	private HashMap<String, String> templates;
 	private boolean usesAnsi;
 	private String logTemplate;
@@ -24,6 +26,8 @@ public class LogProperties {
 	 */
 	public LogProperties() {
 		this.dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd - HH:mm:ss");
+		this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		this.timeFormat = new SimpleDateFormat("HH:mm:ss");
 		this.templates = new HashMap<String, String>();
 		this.templates.put(TemplateElements.DelimiterOpen, "[");
 		this.templates.put(TemplateElements.DelimiterClose, "]");
@@ -50,11 +54,27 @@ public class LogProperties {
   
 	// -------------------- GETTER --------------------
 	/**
-	 * Returns the current {@link SimpleDateFormat}.
+	 * Returns the current datetimeformat as {@link SimpleDateFormat}.
 	 * @return datetimeFormat used.
 	 */
 	public SimpleDateFormat getDateTimeFormat() {
 		return this.dateTimeFormat;
+	}
+	
+	/**
+	 * Returns the current dateformat as {@link SimpleDateFormat}.
+	 * @return datetimeFormat used.
+	 */
+	public SimpleDateFormat getDateFormat() {
+		return this.dateFormat;
+	}
+	
+	/**
+	 * Returns the current timeformat as {@link SimpleDateFormat}.
+	 * @return datetimeFormat used.
+	 */
+	public SimpleDateFormat getTimeFormat() {
+		return this.timeFormat;
 	}
 	
 	/**
