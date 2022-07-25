@@ -114,7 +114,7 @@ public abstract class Log {
 	 * Sets a new {@link LogProperties} object to be used for this Log.
 	 * @param properties to be set
 	 */
-	public void setProperies(LogProperties properties) {
+	public void setProperties(LogProperties properties) {
 		this.properties = properties;
 	}
 	
