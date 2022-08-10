@@ -7,10 +7,11 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-import dev.bitbite.logging.Category;
 import dev.bitbite.logging.Log;
-import dev.bitbite.logging.LogLevel;
+import dev.bitbite.logging.LogLevels;
+import dev.bitbite.logging.LogMessage;
 
 /**
  * This class is a full implementation of {@link Log} and will output log messages to a given File;
@@ -51,26 +52,24 @@ public class FileLog extends Log {
 	}
 	
 	@Override
-	public void log(LogLevel logLevel, Category category, String message) {
-		this.writer.println(this.format(logLevel, category, message));
-		this.writer.flush();
-	}
-	
-	@Override
-	public void log(LogLevel logLevel, String message) {
-		this.writer.println(this.format(logLevel, message));
-		this.writer.flush();
-	}
-
-	@Override
-	public void log(LogLevel logLevel, Category category, Exception exception) {
-		this.writer.println(this.format(logLevel, category, exception.getMessage()));
-		this.writer.flush();
-	}
-
-	@Override
-	public void log(LogLevel logLevel, Exception exception) {
-		this.writer.println(this.format(logLevel, exception.getMessage()));
+	public void log(LogMessage logMessage) {
+		String logContent = "";
+		if(logMessage.message != null) {
+			logContent += logMessage.message;
+		}
+		if(logMessage.message != null && logMessage.exception != null) {
+			logContent += " ";
+		}
+		if(logMessage.exception != null) {
+			StackTraceElement elem = logMessage.exception.getStackTrace()[0];
+			logContent += logMessage.exception.getMessage()+" in "+elem.getClassName()+":"+elem.getLineNumber();
+		}
+		this.writer.println(this.format(logMessage.logLevel, logMessage.category, logContent));
+		if(logMessage.exception != null) {
+			Arrays.stream(logMessage.exception.getStackTrace()).skip(1).forEach(e -> {
+				this.writer.println(this.format(LogLevels.STACKTRACE, logMessage.category, e.getClassName()+" in line "+e.getLineNumber()));
+			});
+		}
 		this.writer.flush();
 	}
 

@@ -1,7 +1,6 @@
 package dev.bitbite.logging;
 
 import java.util.Date;
-import java.util.HashMap;
 
 /**
  * This abstraction provides functionality to format message strings by appending additional information like date and time when the message was logged,
@@ -22,43 +21,6 @@ public abstract class Log {
 	 * @param logLevel for the formatting
 	 * @param category for the formatting
 	 * @param message for the replacement
-	 * @param replacements HashMap with user defined templates with their replacement information.
-	 * @return the formatted String
-	 */
-	protected String format(LogLevel logLevel, Category category, String message, HashMap<String, String> replacements) {
-		String modify = this.properties.getLogTemplate();
-		for(var replacement : replacements.entrySet()) {
-			modify = modify.replace(replacement.getKey(), (!replacement.getValue().contains("\u001b[") || this.properties.usesAnsi()) ? replacement.getValue() : "");
-		}
-		for(var template : this.properties.getTemplates().entrySet()) {
-			modify = modify.replace(template.getKey(), (!template.getValue().contains("\u001b[") || this.properties.usesAnsi()) ? template.getValue() : "");
-		}
-		return this.replaceDynamicElements(logLevel, category, message, modify);
-	}
-	
-	/**
-	 * Formats the template String defined in {@link LogProperties} accordingly with actual information.
-	 * @param logLevel for the formatting
-	 * @param message for the replacement
-	 * @param replacements HashMap with user defined templates with their replacement information
-	 * @return the formatted String
-	 */
-	protected String format(LogLevel logLevel, String message, HashMap<String, String> replacements) {
-		String modify = this.properties.getLogTemplate();
-		for(var replacement : replacements.entrySet()) {
-			modify = modify.replace(replacement.getKey(), (!replacement.getValue().contains("\u001b[") || this.properties.usesAnsi()) ? replacement.getValue() : "");
-		}
-		for(var template : this.properties.getTemplates().entrySet()) {
-			modify = modify.replace(template.getKey(), (!template.getValue().contains("\u001b[") || this.properties.usesAnsi()) ? template.getValue() : "");
-		}
-		return this.replaceDynamicElements(logLevel, null, message, modify);
-	}
-	
-	/**
-	 * Formats the template String defined in {@link LogProperties} accordingly with actual information.
-	 * @param logLevel for the formatting
-	 * @param category for the formatting
-	 * @param message for the replacement
 	 * @return the formatted String
 	 */
 	protected String format(LogLevel logLevel, Category category, String message) {
@@ -70,20 +32,6 @@ public abstract class Log {
 	}
 	
 	/**
-	 * Formats the template String defined in {@link LogProperties} accordingly with actual information.
-	 * @param logLevel for the formatting
-	 * @param message for the replacement
-	 * @return the formatted String
-	 */
-	protected String format(LogLevel logLevel, String message) {
-		String modify = this.properties.getLogTemplate();
-		for(var template : this.properties.getTemplates().entrySet()) {
-			modify = modify.replace(template.getKey(), (!template.getValue().contains("\u001b[") || this.properties.usesAnsi()) ? template.getValue() : "");
-		}
-		return this.replaceDynamicElements(logLevel, null, message, modify);
-	}
-	
-	/**
 	 * Replaces dynamic values of the log template String
 	 * @param logLevel of the template String
 	 * @param category of the template String
@@ -92,9 +40,9 @@ public abstract class Log {
 	 * @return formattedString
 	 */
 	private String replaceDynamicElements(LogLevel logLevel, Category category, String message, String preFormattedString) {
-		preFormattedString = preFormattedString.replace(TemplateElements.LogLevelFormat, (this.properties.usesAnsi()) ? logLevel.ansi.toString() : "");
+		preFormattedString = (logLevel != null) ? preFormattedString.replace(TemplateElements.LogLevelFormat, (this.properties.usesAnsi()) ? logLevel.ansi.toString() : "") : preFormattedString.replace(TemplateElements.LogLevelFormat, "");
 		preFormattedString = (category != null) ? preFormattedString.replace(TemplateElements.CategoryFormat, (this.properties.usesAnsi()) ? category.ansi.toString() : "") : preFormattedString.replace(TemplateElements.CategoryFormat, "");
-		preFormattedString = preFormattedString.replace(TemplateElements.LogLevelName, logLevel.name);
+		preFormattedString = (logLevel != null) ? preFormattedString.replace(TemplateElements.LogLevelName, logLevel.name) : preFormattedString.replace(TemplateElements.LogLevelName, "");
 		preFormattedString = (category != null) ? preFormattedString.replace(TemplateElements.CategoryName, category.name) : preFormattedString.replace(TemplateElements.CategoryName, "");
 		preFormattedString = preFormattedString.replace("[]", "");
 		preFormattedString = preFormattedString.replace(TemplateElements.DateTime, this.properties.getDateTimeFormat().format(new Date()));
@@ -120,32 +68,50 @@ public abstract class Log {
 	}
 	
 	/**
-	 * Logs messages using an implementation class to an implemented output, using the provided {@link LogLevel}, {@link Category} and message.
-	 * @param logLevel of this log message
-	 * @param category of this message
-	 * @param message to be logged
+	 * Logs a provided {@link LogMessage} using an implementation class to a given output.
+	 * @param logMessage to be logged.
 	 */
-	public abstract void log(LogLevel logLevel, Category category, String message);
+	public abstract void log(LogMessage logMessage);
 	
 	/**
-	 * Logs messages using an implementation class to an implemented output, using the provided {@link LogLevel} and message.
-	 * @param logLevel of this message
-	 * @param message to be logged
+	 * Logs a given message using default values and an implementation class to a given output.
+	 * @param message to be logged.
 	 */
-	public abstract void log(LogLevel logLevel, String message);
+	public void debug(String message) {
+		this.log(new LogMessage(LogLevels.DEBUG, null, message, null));
+	}
 	
 	/**
-	 * Logs exceptions using an implementation class to an implemented output, using the provided {@link LogLevel}, {@link Category} and {@link Exception}.
-	 * @param logLevel of the exception
-	 * @param category of the exception
-	 * @param exception to be logged
+	 * Logs a given message using default values and an implementation class to a given output.
+	 * @param message to be logged.
 	 */
-	public abstract void log(LogLevel logLevel, Category category, Exception exception);
+	public void info(String message) {
+		this.log(new LogMessage(LogLevels.INFO, null, message, null));
+	}
 	
 	/**
-	 * Logs exceptions using an imlementation class to an implemented output, using the provided {@link LogLevel} and {@link Exception}.
-	 * @param logLevel of the exception
-	 * @param exception to be logged
+	 * Logs a given message using default values and an implementation class to a given output.
+	 * @param message to be logged.
 	 */
-	public abstract void log(LogLevel logLevel, Exception exception);
+	public void warning(String message) {
+		this.log(new LogMessage(LogLevels.WARNING, null, message, null));
+	}
+	
+	/**
+	 * Logs a given message using default values and an implementation class to a given output.
+	 * @param message to be logged.
+	 */
+	public void error(String message) {
+		this.log(new LogMessage(LogLevels.ERROR, null, message, null));
+	}
+	
+	/**
+	 * Logs a given message using default values and an implementation class to a given output.
+	 * @param message to be logged.
+	 */
+	public void critical(String message) {
+		this.log(new LogMessage(LogLevels.CRITICAL, null, message, null));
+	}
+	
+	
 }
