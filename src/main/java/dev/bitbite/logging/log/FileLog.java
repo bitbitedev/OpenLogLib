@@ -61,10 +61,15 @@ public class FileLog extends Log {
 			logContent += " ";
 		}
 		if(logMessage.exception != null) {
-			logContent += logMessage.exception.getMessage()+" in "+logMessage.exception.getStackTrace()[0].getClassName()+":"+logMessage.exception.getStackTrace()[0].getLineNumber();
+			StackTraceElement elem = logMessage.exception.getStackTrace()[0];
+			logContent += logMessage.exception.getMessage()+" in "+elem.getClassName()+":"+elem.getLineNumber();
 		}
 		this.writer.println(this.format(logMessage.logLevel, logMessage.category, logContent));
-		if(logMessage.exception != null) Arrays.stream(logMessage.exception.getStackTrace()).skip(1).forEach(e -> { this.writer.println(this.format(LogLevels.STACKTRACE, logMessage.category, e.getClassName()+" in line "+e.getLineNumber())); });
+		if(logMessage.exception != null) {
+			Arrays.stream(logMessage.exception.getStackTrace()).skip(1).forEach(e -> {
+				this.writer.println(this.format(LogLevels.STACKTRACE, logMessage.category, e.getClassName()+" in line "+e.getLineNumber()));
+			});
+		}
 		this.writer.flush();
 	}
 
