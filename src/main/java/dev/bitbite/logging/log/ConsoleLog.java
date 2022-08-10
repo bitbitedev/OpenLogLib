@@ -19,6 +19,10 @@ public class ConsoleLog extends Log {
 	public ConsoleLog(ArrayList<Log> logs) {
 		logs.add(this);
 	}
+	
+	public ConsoleLog() {
+		
+	}
 
 	@Override
 	public void log(LogMessage logMessage) {
