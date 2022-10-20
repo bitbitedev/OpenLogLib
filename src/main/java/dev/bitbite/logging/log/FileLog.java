@@ -78,6 +78,7 @@ public class FileLog extends Log {
 			}
 		}
 		this.writer.println(finalMessage);
+		this.writer.flush();
 		return finalMessage;
 	}
 }
