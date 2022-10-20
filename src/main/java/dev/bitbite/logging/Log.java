@@ -70,48 +70,52 @@ public abstract class Log {
 	/**
 	 * Logs a provided {@link LogMessage} using an implementation class to a given output.
 	 * @param logMessage to be logged.
+	 * @return the logged String.
 	 */
-	public abstract void log(LogMessage logMessage);
+	public abstract String log(LogMessage logMessage);
 	
 	/**
 	 * Logs a given message using default values and an implementation class to a given output.
 	 * @param message to be logged.
+	 * @return the logged String.
 	 */
-	public void debug(String message) {
-		this.log(new LogMessage(LogLevels.DEBUG, null, message, null));
+	public String debug(String message) {
+		return this.log(new LogMessage(LogLevels.DEBUG, null, message, null));
 	}
 	
 	/**
 	 * Logs a given message using default values and an implementation class to a given output.
 	 * @param message to be logged.
+	 * @return the logged String.
 	 */
-	public void info(String message) {
-		this.log(new LogMessage(LogLevels.INFO, null, message, null));
+	public String info(String message) {
+		return this.log(new LogMessage(LogLevels.INFO, null, message, null));
 	}
 	
 	/**
 	 * Logs a given message using default values and an implementation class to a given output.
 	 * @param message to be logged.
+	 * @return the logged String.
 	 */
-	public void warning(String message) {
-		this.log(new LogMessage(LogLevels.WARNING, null, message, null));
+	public String warning(String message) {
+		return this.log(new LogMessage(LogLevels.WARNING, null, message, null));
 	}
 	
 	/**
 	 * Logs a given message using default values and an implementation class to a given output.
 	 * @param message to be logged.
+	 * @return the logged String.
 	 */
-	public void error(String message) {
-		this.log(new LogMessage(LogLevels.ERROR, null, message, null));
+	public String error(String message) {
+		return this.log(new LogMessage(LogLevels.ERROR, null, message, null));
 	}
 	
 	/**
 	 * Logs a given message using default values and an implementation class to a given output.
 	 * @param message to be logged.
+	 * @return the logged String.
 	 */
-	public void critical(String message) {
-		this.log(new LogMessage(LogLevels.CRITICAL, null, message, null));
+	public String critical(String message) {
+		return this.log(new LogMessage(LogLevels.CRITICAL, null, message, null));
 	}
-	
-	
 }

@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'dev.bitbite'
-version = '0.1.0'
+version = '0.2.0'
 
 java {
 	toolchain {
@@ -22,7 +22,7 @@ publishing {
 			from components.java
 			groupId = 'dev.bitbite'
 			artifactId = 'OpenLogLib'
-			version = '0.1.0'
+			version = '0.2.0'
 			pom {
 				name = 'OpenLogLib - Logging made easy'
 				description = 'OpenLogLib is a easy to use library for logging messages by providing the required methods, while keeping the API lightweight and logical.'
@@ -84,8 +84,8 @@ repositories {
 dependencies {
     // Use JUnit Jupiter for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
-    
-    implementation 'dev.thatsnasu:Ansi:1.1.0'
+
+    implementation 'dev.thatsnasu:Ansi:1.1.1'
 }
 
 tasks.named('test') {

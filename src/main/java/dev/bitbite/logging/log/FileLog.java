@@ -7,7 +7,6 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import dev.bitbite.logging.Log;
 import dev.bitbite.logging.LogLevels;
@@ -50,27 +49,35 @@ public class FileLog extends Log {
 	public FileLog(String path) throws FileNotFoundException {
 		this(new File(path));
 	}
-	
+
 	@Override
-	public void log(LogMessage logMessage) {
+	public String log(LogMessage logMessage) {
+		String finalMessage = "";
 		String logContent = "";
 		if(logMessage.message != null) {
 			logContent += logMessage.message;
 		}
-		if(logMessage.message != null && logMessage.exception != null) {
+		if(logMessage != null && logMessage.exception != null) {
 			logContent += " ";
 		}
 		if(logMessage.exception != null) {
 			StackTraceElement elem = logMessage.exception.getStackTrace()[0];
 			logContent += logMessage.exception.getMessage()+" in "+elem.getClassName()+":"+elem.getLineNumber();
 		}
-		this.writer.println(this.format(logMessage.logLevel, logMessage.category, logContent));
+		finalMessage += this.format(logMessage.logLevel, logMessage.category, logContent);
 		if(logMessage.exception != null) {
-			Arrays.stream(logMessage.exception.getStackTrace()).skip(1).forEach(e -> {
-				this.writer.println(this.format(LogLevels.STACKTRACE, logMessage.category, e.getClassName()+" in line "+e.getLineNumber()));
-			});
+			boolean first = true;
+			finalMessage += "\n";
+			for(int i = 0; i < logMessage.exception.getStackTrace().length; i++) {
+				if(first) {
+					first = false;
+					continue;
+				}
+				StackTraceElement elem = logMessage.exception.getStackTrace()[i];
+				finalMessage += this.format(LogLevels.STACKTRACE, logMessage.category, elem.getClassName()+" in line "+elem.getLineNumber())+"\n";
+			}
 		}
-		this.writer.flush();
+		this.writer.println(finalMessage);
+		return finalMessage;
 	}
-
 }
