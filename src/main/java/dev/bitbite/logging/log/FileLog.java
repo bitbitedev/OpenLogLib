@@ -22,9 +22,10 @@ public class FileLog extends Log {
 	/**
 	 * Creates a Log object and a new output File, where the log will be written to.
 	 * @param logFile to write to
+	 * @param append true if the log should append to existing files, false to overwrite them
 	 * @throws FileNotFoundException if the output {@link File} could not be created.
 	 */
-	public FileLog(File logFile) throws FileNotFoundException {
+	public FileLog(File logFile, boolean append) throws FileNotFoundException {
 		this.logFile = logFile;
 		if(!Files.exists(this.logFile.toPath().toAbsolutePath().getParent())) this.logFile.toPath().toAbsolutePath().getParent().toFile().mkdirs();
 		this.writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(this.logFile)));
@@ -33,21 +34,23 @@ public class FileLog extends Log {
 	/**
 	 * Creates a new Log Object and a new output File, where the log will be written to. Afterwards registers itself to a given {@link ArrayList}.
 	 * @param logFile to write to
+	 * @param append true if the log should append to existing files, false to overwrite them
 	 * @param logs to be registered to
 	 * @throws FileNotFoundException if the output {@link File} could not be created
 	 */
-	public FileLog(File logFile, ArrayList<Log> logs) throws FileNotFoundException {
-		this(logFile);
+	public FileLog(File logFile, boolean append, ArrayList<Log> logs) throws FileNotFoundException {
+		this(logFile, append);
 		logs.add(this);
 	}
 	
 	/**
 	 * Creates a Log object and a new output File, where the log will be written to.
 	 * @param path - String representation of the path
+	 * @param append true if the log should append to existing files, false to overwrite them
 	 * @throws FileNotFoundException - if the output file could not be created.
 	 */
-	public FileLog(String path) throws FileNotFoundException {
-		this(new File(path));
+	public FileLog(String path, boolean append) throws FileNotFoundException {
+		this(new File(path), append);
 	}
 
 	@Override
